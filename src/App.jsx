@@ -1,13 +1,12 @@
-import './App.css'
-
-import { Button } from "@/components/ui/button"
- 
+import "./App.css";
+import Hero from "./components/ui/custom/Hero";
 function App() {
   return (
-    <div className="flex min-h-svh flex-col items-center justify-center">
-      <Button>I am A black button</Button>
-    </div>
-  )
+    <>
+      {/* {Hero} */}
+      <Hero />
+    </>
+  );
 }
- 
-export default App
+
+export default App;
