@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-
+import { Input } from "@/components/ui/input";
 function CreateTrip() {
   const [query, setQuery] = useState("");
   const [suggestions, setSuggestions] = useState([]);
@@ -53,7 +53,7 @@ function CreateTrip() {
         a customized itinerary based on your preferences.
       </p>
 
-      <div className="my-20">
+      <div className="my-20 flex flex-col gap-10">
         <div className="relative">
           <h2 className="text-xl my-3 font-medium">
             What is your destination of choice?
@@ -81,6 +81,12 @@ function CreateTrip() {
             </ul>
           )}
         </div>
+      </div>
+      <div>
+        <h2 className="text-xl my-3 font-medium">
+            How many days are you planning your trip?
+          </h2>
+          <Input placeholder={'Ex.3'} type="number"/>
       </div>
     </div>
   );
