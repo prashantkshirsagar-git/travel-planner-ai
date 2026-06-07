@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
+import { SelectBudgetOptions } from "@/constants/options";
+
 function CreateTrip() {
   const [query, setQuery] = useState("");
   const [suggestions, setSuggestions] = useState([]);
@@ -87,6 +89,18 @@ function CreateTrip() {
             How many days are you planning your trip?
           </h2>
           <Input placeholder={'Ex.3'} type="number"/>
+      </div>
+      <div>
+        <h2 className="text-xl my-3 font-medium">
+           What is your budget?
+          </h2>
+          <div>
+            {SelectBudgetOptions.map((item,index)=>(
+              <div key={index}>
+                <h2>{item.icon}</h2>
+              </div>
+            ))}
+          </div>
       </div>
     </div>
   );
