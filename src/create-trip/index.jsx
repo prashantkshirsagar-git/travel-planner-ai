@@ -2,19 +2,20 @@ import React, { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { SelectBudgetOptions, SelectTravelesList } from "@/constants/options";
 import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
+import { AI_PROMPT, chatSession } from "@/service/AImodel";
 
 function CreateTrip() {
   const [query, setQuery] = useState("");
   const [suggestions, setSuggestions] = useState([]);
 
-  // 1. Create a consolidated state for the trip preferences
   const [formData, setFormData] = useState({
+    location: "",
     noOfDays: "",
     budget: "",
     traveler: "",
   });
 
-  // 2. A flexible function to update our form data
   const handleFormChange = (name, value) => {
     setFormData((prev) => ({
       ...prev,
@@ -55,19 +56,36 @@ function CreateTrip() {
 
   const handleSelect = (placeName) => {
     setQuery(placeName);
+    handleFormChange("location", placeName);
     setSuggestions([]);
   };
 
-  // Optional: Monitor form submissions / state updates
-  const handleGenerateTrip = () => {
+  const handleGenerateTrip = async () => {
+    if (
+      !query ||
+      !formData?.noOfDays ||
+      !formData?.budget ||
+      !formData?.traveler
+    ) {
+      toast("Please fill all the details");
+      return;
+    }
+
     if (formData?.noOfDays > 5) {
       console.log("Trip duration cannot exceed 5 days");
       return;
     }
-    console.log("Generating trip with details:", {
-      destination: query,
-      ...formData,
-    });
+
+    const FINAL_PROMPT = AI_PROMPT.replace("{location}", formData?.location)
+      .replace("{totalDays}", formData?.noOfDays)
+      .replace("{traveler}", formData?.traveler)
+      .replace("{budget}", formData?.budget)
+      .replace("{totalDays}", formData?.noOfDays);
+
+
+      console.log( FINAL_PROMPT);
+    const result = await chatSession.sendMessage(FINAL_PROMPT);
+    console.log( result.text);
   };
 
   return (
