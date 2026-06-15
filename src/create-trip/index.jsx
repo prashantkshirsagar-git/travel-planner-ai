@@ -13,6 +13,8 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { FcGoogle } from "react-icons/fc";
+import { LogIn } from "lucide-react";
+import { useGoogleLogin } from "@react-oauth/google";
 
 function CreateTrip() {
   const [query, setQuery] = useState("");
@@ -69,6 +71,10 @@ function CreateTrip() {
     setSuggestions([]);
   };
 
+  const login = useGoogleLogin({
+    onSuncess:(codeResp) =>console.log(codeResp),
+    onError:(error)=>console.log(error)
+})
   const handleGenerateTrip = async () => {
     const user = localStorage.getItem("user");
 
@@ -219,8 +225,10 @@ function CreateTrip() {
           <p>
             Sign In with Google Authentication
           </p>
-          <Button className="w-full mt-5 gap-4 items-center">
-            <FcGoogle className="" />
+          <Button 
+          onClick={login}
+          className="w-full mt-5 gap-4 items-center">
+            <FcGoogle className="h-7 w-7" />
             Sign in with Google
           </Button>
         </DialogContent>
