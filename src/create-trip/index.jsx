@@ -4,6 +4,14 @@ import { SelectBudgetOptions, SelectTravelesList } from "@/constants/options";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { AI_PROMPT, chatSession } from "@/service/AImodel";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
 
 function CreateTrip() {
   const [query, setQuery] = useState("");
@@ -15,7 +23,7 @@ function CreateTrip() {
     budget: "",
     traveler: "",
   });
-
+ const [openDialog,setOpenDialog] = useState(false);
   const handleFormChange = (name, value) => {
     setFormData((prev) => ({
       ...prev,
@@ -61,6 +69,13 @@ function CreateTrip() {
   };
 
   const handleGenerateTrip = async () => {
+    const user = localStorage.getItem("user");
+
+    if (!user) {
+      setOpenDialog(true)
+      return;
+    }
+
     if (
       !query ||
       !formData?.noOfDays ||
@@ -82,10 +97,9 @@ function CreateTrip() {
       .replace("{budget}", formData?.budget)
       .replace("{totalDays}", formData?.noOfDays);
 
-
-      console.log( FINAL_PROMPT);
+    console.log(FINAL_PROMPT);
     const result = await chatSession.sendMessage(FINAL_PROMPT);
-    console.log( result.text);
+    console.log(result.text);
   };
 
   return (
@@ -190,6 +204,23 @@ function CreateTrip() {
       <div className="my-10 justify-end flex">
         <Button onClick={handleGenerateTrip}>Generate Trip</Button>
       </div>
+
+      <Dialog>
+  
+  <Dialog open={openDialog} onOpenChange={setOpenDialog}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Sign In Required</DialogTitle>
+            <DialogDescription>
+              Please authenticate with Google to securely generate and save your custom travel itinerary.
+            </DialogDescription>
+          </DialogHeader>
+          
+          
+          
+        </DialogContent>
+      </Dialog>
+</Dialog>
     </div>
   );
 }
