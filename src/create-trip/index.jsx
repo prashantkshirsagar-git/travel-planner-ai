@@ -11,9 +11,8 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
+} from "@/components/ui/dialog";
 import { FcGoogle } from "react-icons/fc";
-
 
 function CreateTrip() {
   const [query, setQuery] = useState("");
@@ -25,7 +24,7 @@ function CreateTrip() {
     budget: "",
     traveler: "",
   });
- const [openDialog,setOpenDialog] = useState(false);
+  const [openDialog, setOpenDialog] = useState(false);
   const handleFormChange = (name, value) => {
     setFormData((prev) => ({
       ...prev,
@@ -74,7 +73,7 @@ function CreateTrip() {
     const user = localStorage.getItem("user");
 
     if (!user) {
-      setOpenDialog(true)
+      setOpenDialog(true);
       return;
     }
 
@@ -207,20 +206,26 @@ function CreateTrip() {
         <Button onClick={handleGenerateTrip}>Generate Trip</Button>
       </div>
 
-  <Dialog open={openDialog} onOpenChange={setOpenDialog}>
+      <Dialog open={openDialog} onOpenChange={setOpenDialog}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle className="font-bold text-l mt-7" >Sign in with Google</DialogTitle>
-            <DialogDescription>
-              <img src="logo.svg" alt="logo"/>
-              <p>sign in with google authentication</p>
-              <Button className= "w-full mt-5"><FcGoogle />Sign in with Google</Button>
-            </DialogDescription>
+            <DialogTitle className="font-bold text-l mt-7">
+              Sign in with Google
+            </DialogTitle>
+            <DialogDescription></DialogDescription>
           </DialogHeader>
+
+          <img src="logo.svg" alt="logo" />
+          <p>
+            Sign In with Google Authentication
+          </p>
+          <Button className="w-full mt-5 gap-4 items-center">
+            <FcGoogle className="" />
+            Sign in with Google
+          </Button>
         </DialogContent>
       </Dialog>
-
-  </div>
+    </div>
   );
 }
 
