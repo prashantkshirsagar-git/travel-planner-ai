@@ -12,6 +12,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
+import { FcGoogle } from "react-icons/fc";
+
 
 function CreateTrip() {
   const [query, setQuery] = useState("");
@@ -205,23 +207,20 @@ function CreateTrip() {
         <Button onClick={handleGenerateTrip}>Generate Trip</Button>
       </div>
 
-      <Dialog>
-  
   <Dialog open={openDialog} onOpenChange={setOpenDialog}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Sign In Required</DialogTitle>
+            <DialogTitle className="font-bold text-l mt-7" >Sign in with Google</DialogTitle>
             <DialogDescription>
-              Please authenticate with Google to securely generate and save your custom travel itinerary.
+              <img src="logo.svg" alt="logo"/>
+              <p>sign in with google authentication</p>
+              <Button className= "w-full mt-5"><FcGoogle />Sign in with Google</Button>
             </DialogDescription>
           </DialogHeader>
-          
-          
-          
         </DialogContent>
       </Dialog>
-</Dialog>
-    </div>
+
+  </div>
   );
 }
 
