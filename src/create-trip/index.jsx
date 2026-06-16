@@ -15,6 +15,7 @@ import {
 import { FcGoogle } from "react-icons/fc";
 import { LogIn } from "lucide-react";
 import { useGoogleLogin } from "@react-oauth/google";
+import axios from "axios";
 
 function CreateTrip() {
   const [query, setQuery] = useState("");
@@ -72,9 +73,10 @@ function CreateTrip() {
   };
 
   const login = useGoogleLogin({
-    onSuncess:(codeResp) =>console.log(codeResp),
-    onError:(error)=>console.log(error)
-})
+    onSuccess: (codeResp) => GetUserProfile(codeResp),
+    onError: (error) => console.log(error),
+  });
+
   const handleGenerateTrip = async () => {
     const user = localStorage.getItem("user");
 
@@ -109,6 +111,24 @@ function CreateTrip() {
     console.log(result.text);
   };
 
+  const GetUserProfile = (tokenInfo) => {
+    axios
+      .get(
+        `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${tokenInfo?.access_token}`,
+        {
+          headers: {
+            Authorization: `Bearer ${tokenInfo.access_token}`,
+            Accept: "application/json",
+          },
+        },
+      )
+      .then((resp) => {
+        console.log(resp);
+        localStorage.setItem('user',JSON.stringify(resp.data));
+        setOpenDialog(false);
+        handleGenerateTrip();
+      });
+  };
   return (
     <div className="sm:px-10 md:px-32 lg:px-56 xl:px-72 px-5 mt-10">
       <h2 className="font-bold text-3xl">
@@ -222,12 +242,8 @@ function CreateTrip() {
           </DialogHeader>
 
           <img src="logo.svg" alt="logo" />
-          <p>
-            Sign In with Google Authentication
-          </p>
-          <Button 
-          onClick={login}
-          className="w-full mt-5 gap-4 items-center">
+          <p>Sign In with Google Authentication</p>
+          <Button onClick={login} className="w-full mt-5 gap-4 items-center">
             <FcGoogle className="h-7 w-7" />
             Sign in with Google
           </Button>
