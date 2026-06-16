@@ -1,0 +1,10 @@
+[33m8f97b4f[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m feat: complete Google Auth workflow by saving profile data to localStorage
+[33m04e02e5[m fetch: add google login authentication to the button
+[33m53ea6ff[m fix: fix some errors in DialogContent
+[33me414ec7[m feat:Google icons is added to DialogContent from react-icons
+[33me60cedd[m feat: implement user authentication check modal on trip generation
+[33m52c8485[m feat: integrate Google OAuth Provider configuration
+[33m011053c[m feat: integrate Google Gemini API for travel plan generation
+[33mc1e1e88[m feat: add trip preference options and form validation
+[33mbf641b2[m feat: implement budget selection layout with dynamic option cards
+[33m2fa5616[m feat:add trip duration input field to CreateTrip page
