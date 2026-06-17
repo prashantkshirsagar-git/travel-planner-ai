@@ -10,16 +10,15 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import { FcGoogle } from "react-icons/fc";
-import { LogIn } from "lucide-react";
 import { useGoogleLogin } from "@react-oauth/google";
 import axios from "axios";
 
 function CreateTrip() {
   const [query, setQuery] = useState("");
   const [suggestions, setSuggestions] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const [formData, setFormData] = useState({
     location: "",
@@ -27,7 +26,9 @@ function CreateTrip() {
     budget: "",
     traveler: "",
   });
+  
   const [openDialog, setOpenDialog] = useState(false);
+
   const handleFormChange = (name, value) => {
     setFormData((prev) => ({
       ...prev,
@@ -37,33 +38,40 @@ function CreateTrip() {
 
   const handleInputChange = (e) => {
     setQuery(e.target.value);
-    console.log("1. User typed something:", e.target.value);
   };
 
+  // FIX 1: Handled Race Conditions using an active flag
   useEffect(() => {
     if (query.length <= 2) {
       setSuggestions([]);
       return;
     }
 
+    let active = true;
+
     const delayFetch = setTimeout(async () => {
-      console.log("2. Timer finished, starting fetch for:", query);
       try {
         const response = await fetch(
-          `https://nominatim.openstreetmap.org/search?format=json&q=${query}&addressdetails=1&limit=5`,
+          `https://nominatim.openstreetmap.org/search?format=json&q=${query}&addressdetails=1&limit=5`
         );
 
         if (!response.ok) throw new Error("Network response was not ok");
 
         const data = await response.json();
-        console.log("3. Data received from internet:", data);
-        setSuggestions(data);
+        
+        // Only update state if this is still the most recent request
+        if (active) {
+          setSuggestions(data);
+        }
       } catch (error) {
         console.error("Failed to fetch location data:", error);
       }
     }, 600);
 
-    return () => clearTimeout(delayFetch);
+    return () => {
+      active = false;
+      clearTimeout(delayFetch);
+    };
   }, [query]);
 
   const handleSelect = (placeName) => {
@@ -72,9 +80,10 @@ function CreateTrip() {
     setSuggestions([]);
   };
 
+  // FIX 2: Restructured to completely separate Auth step from Generation logic 
   const login = useGoogleLogin({
     onSuccess: (codeResp) => GetUserProfile(codeResp),
-    onError: (error) => console.log(error),
+    onError: (error) => console.log("Login Failed:", error),
   });
 
   const handleGenerateTrip = async () => {
@@ -95,20 +104,29 @@ function CreateTrip() {
       return;
     }
 
-    if (formData?.noOfDays > 5) {
-      console.log("Trip duration cannot exceed 5 days");
+    if (Number(formData?.noOfDays) > 5) {
+      toast("Trip duration cannot exceed 5 days");
       return;
     }
 
-    const FINAL_PROMPT = AI_PROMPT.replace("{location}", formData?.location)
-      .replace("{totalDays}", formData?.noOfDays)
-      .replace("{traveler}", formData?.traveler)
-      .replace("{budget}", formData?.budget)
-      .replace("{totalDays}", formData?.noOfDays);
+    try {
+      setLoading(true);
+      const FINAL_PROMPT = AI_PROMPT.replace("{location}", formData?.location)
+        .replace("{totalDays}", formData?.noOfDays)
+        .replace("{traveler}", formData?.traveler)
+        .replace("{budget}", formData?.budget)
+        .replace("{totalDays}", formData?.noOfDays);
 
-    console.log(FINAL_PROMPT);
-    const result = await chatSession.sendMessage(FINAL_PROMPT);
-    console.log(result.text);
+      console.log(FINAL_PROMPT);
+      const result = await chatSession.sendMessage(FINAL_PROMPT);
+      console.log(result.text);
+      toast("Trip generated successfully!");
+    } catch (error) {
+      console.error(error);
+      toast("Failed to generate trip. Try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const GetUserProfile = (tokenInfo) => {
@@ -120,15 +138,20 @@ function CreateTrip() {
             Authorization: `Bearer ${tokenInfo.access_token}`,
             Accept: "application/json",
           },
-        },
+        }
       )
       .then((resp) => {
-        console.log(resp);
-        localStorage.setItem('user',JSON.stringify(resp.data));
+        localStorage.setItem("user", JSON.stringify(resp.data));
         setOpenDialog(false);
-        handleGenerateTrip();
+        // Prompt user to click generate again with fresh state synced
+        toast("Authenticated successfully! Click 'Generate Trip' again.");
+      })
+      .catch((err) => {
+        console.error("Error fetching user profile", err);
+        toast("Authentication failed");
       });
   };
+
   return (
     <div className="sm:px-10 md:px-32 lg:px-56 xl:px-72 px-5 mt-10">
       <h2 className="font-bold text-3xl">
@@ -154,7 +177,7 @@ function CreateTrip() {
           />
 
           {suggestions.length > 0 && (
-            <ul className="absolute z-10 w-full bg-white border border-gray-200 rounded-md mt-1 shadow-lg">
+            <ul className="absolute z-10 w-full bg-white border border-gray-200 rounded-md mt-1 shadow-lg max-h-60 overflow-y-auto">
               {suggestions.map((item) => (
                 <li
                   key={item.place_id}
@@ -229,10 +252,13 @@ function CreateTrip() {
       </div>
 
       <div className="my-10 justify-end flex">
-        <Button onClick={handleGenerateTrip}>Generate Trip</Button>
+        <Button disabled={loading} onClick={handleGenerateTrip}>
+          {loading ? "Generating..." : "Generate Trip"}
+        </Button>
       </div>
 
-      <Dialog open={openDialog} onOpenChange={setOpenDialog}>
+
+ <Dialog open={openDialog} onOpenChange={setOpenDialog}>
         <DialogContent>
           <DialogHeader>
             <DialogTitle className="font-bold text-l mt-7">
@@ -249,6 +275,7 @@ function CreateTrip() {
           </Button>
         </DialogContent>
       </Dialog>
+
     </div>
   );
 }
