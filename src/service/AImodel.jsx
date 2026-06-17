@@ -14,13 +14,28 @@ export const AI_PROMPT = `Generate Travel Plan for Location: {location}, for {to
 
 
 
+
 export const chatSession = {
-  sendMessage: async (prompt) => {
-    const response = await ai.models.generateContent({
-      model: "gemini-2.5-flash",
-      config: { responseMimeType: "application/json" },
-      contents: prompt,
-    });
-    return { text: response.text };
+  sendMessage: async (promptText) => {
+    try {
+      const response = await ai.models.generateContent({
+        model: "gemini-2.5-flash",
+        config: { 
+          responseMimeType: "application/json" 
+        },
+        
+        contents: [
+          {
+            role: "user",
+            parts: [{ text: promptText }]
+          }
+        ],
+      });
+
+      return { text: response.text };
+    } catch (error) {
+      console.error("Gemini API Error:", error);
+      throw error;
+    }
   }
 };
