@@ -115,7 +115,7 @@ function CreateTrip() {
         .replace("{totalDays}", formData?.noOfDays)
         .replace("{traveler}", formData?.traveler)
         .replace("{budget}", formData?.budget)
-        .replace("{totalDays}", formData?.noOfDays);
+        
 
       console.log(FINAL_PROMPT);
       const result = await chatSession.sendMessage(FINAL_PROMPT);
