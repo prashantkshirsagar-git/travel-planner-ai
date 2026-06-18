@@ -1,9 +1,9 @@
 import React from 'react'
 
-const InfoSection = ({trip}) => {
+function InfoSection() {
   return (
     <div>
-      
+      <img src="/placeholder.jpg" className='h[340px] w-full object rounded-xl'/>
     </div>
   )
 }
