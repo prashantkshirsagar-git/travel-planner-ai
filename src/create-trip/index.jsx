@@ -17,6 +17,8 @@ import axios from "axios";
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "@/service/firebaseConfig";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { useNavigate } from "react-router-dom";
+
 
 function CreateTrip() {
   const [query, setQuery] = useState("");
@@ -31,6 +33,7 @@ function CreateTrip() {
   });
 
   const [openDialog, setOpenDialog] = useState(false);
+ const navigate = useNavigate()
 
   const handleFormChange = (name, value) => {
     setFormData((prev) => ({
@@ -149,6 +152,7 @@ function CreateTrip() {
         userEmail: user?.email || "unknown_user",
         id: docId,
       });
+      navigate('/view-trip/'+ docId)
 
       toast("Trip generated and saved successfully!");
     } catch (dbError) {
