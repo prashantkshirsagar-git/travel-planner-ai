@@ -14,6 +14,9 @@ import {
 import { FcGoogle } from "react-icons/fc";
 import { useGoogleLogin } from "@react-oauth/google";
 import axios from "axios";
+import { doc, setDoc } from "firebase/firestore";
+import { db } from "@/service/firebaseConfig";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 function CreateTrip() {
   const [query, setQuery] = useState("");
@@ -26,7 +29,7 @@ function CreateTrip() {
     budget: "",
     traveler: "",
   });
-  
+
   const [openDialog, setOpenDialog] = useState(false);
 
   const handleFormChange = (name, value) => {
@@ -40,7 +43,6 @@ function CreateTrip() {
     setQuery(e.target.value);
   };
 
-  // FIX 1: Handled Race Conditions using an active flag
   useEffect(() => {
     if (query.length <= 2) {
       setSuggestions([]);
@@ -52,13 +54,13 @@ function CreateTrip() {
     const delayFetch = setTimeout(async () => {
       try {
         const response = await fetch(
-          `https://nominatim.openstreetmap.org/search?format=json&q=${query}&addressdetails=1&limit=5`
+          `https://nominatim.openstreetmap.org/search?format=json&q=${query}&addressdetails=1&limit=5`,
         );
 
         if (!response.ok) throw new Error("Network response was not ok");
 
         const data = await response.json();
-        
+
         // Only update state if this is still the most recent request
         if (active) {
           setSuggestions(data);
@@ -80,7 +82,6 @@ function CreateTrip() {
     setSuggestions([]);
   };
 
-  // FIX 2: Restructured to completely separate Auth step from Generation logic 
   const login = useGoogleLogin({
     onSuccess: (codeResp) => GetUserProfile(codeResp),
     onError: (error) => console.log("Login Failed:", error),
@@ -111,19 +112,48 @@ function CreateTrip() {
 
     try {
       setLoading(true);
+
       const FINAL_PROMPT = AI_PROMPT.replace("{location}", formData?.location)
         .replace("{totalDays}", formData?.noOfDays)
         .replace("{traveler}", formData?.traveler)
-        .replace("{budget}", formData?.budget)
-        
+        .replace("{budget}", formData?.budget);
 
-      console.log(FINAL_PROMPT);
-      const result = await chatSession.sendMessage(FINAL_PROMPT);
-      console.log(result.text);
-      toast("Trip generated successfully!");
+      const rawJsonText = await chatSession.sendMessage(FINAL_PROMPT);
+
+      if (!rawJsonText) {
+        throw new Error("Received empty text string from Gemini API.");
+      }
+
+      console.log("Generated Trip Data:", rawJsonText);
+
+      const parsedTripData = JSON.parse(rawJsonText);
+
+      await saveAiTrip(parsedTripData);
     } catch (error) {
-      console.error(error);
-      toast("Failed to generate trip. Try again.");
+      console.error("Generation error:", error);
+      toast("Something went wrong generating your trip.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const saveAiTrip = async (tripDataObj) => {
+    try {
+      setLoading(true);
+      const user = JSON.parse(localStorage.getItem("user"));
+      const docId = Date.now().toString();
+
+      await setDoc(doc(db, "AITrips", docId), {
+        userSelection: formData,
+        tripData: tripDataObj || {},
+        userEmail: user?.email || "unknown_user",
+        id: docId,
+      });
+
+      toast("Trip generated and saved successfully! 🎉");
+    } catch (dbError) {
+      console.error("Firestore saving error:", dbError);
+      toast("Trip generated, but failed to save to account.");
     } finally {
       setLoading(false);
     }
@@ -138,12 +168,12 @@ function CreateTrip() {
             Authorization: `Bearer ${tokenInfo.access_token}`,
             Accept: "application/json",
           },
-        }
+        },
       )
       .then((resp) => {
         localStorage.setItem("user", JSON.stringify(resp.data));
         setOpenDialog(false);
-        // Prompt user to click generate again with fresh state synced
+       
         toast("Authenticated successfully! Click 'Generate Trip' again.");
       })
       .catch((err) => {
@@ -253,12 +283,15 @@ function CreateTrip() {
 
       <div className="my-10 justify-end flex">
         <Button disabled={loading} onClick={handleGenerateTrip}>
-          {loading ? "Generating..." : "Generate Trip"}
+          {loading ? (
+            <AiOutlineLoading3Quarters className="h-7 w7 animate-spin" />
+          ) : (
+            "Generate Trip"
+          )}
         </Button>
       </div>
 
-
- <Dialog open={openDialog} onOpenChange={setOpenDialog}>
+      <Dialog open={openDialog} onOpenChange={setOpenDialog}>
         <DialogContent>
           <DialogHeader>
             <DialogTitle className="font-bold text-l mt-7">
@@ -269,13 +302,13 @@ function CreateTrip() {
 
           <img src="logo.svg" alt="logo" />
           <p>Sign In with Google Authentication</p>
+
           <Button onClick={login} className="w-full mt-5 gap-4 items-center">
             <FcGoogle className="h-7 w-7" />
             Sign in with Google
           </Button>
         </DialogContent>
       </Dialog>
-
     </div>
   );
 }
