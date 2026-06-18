@@ -150,7 +150,7 @@ function CreateTrip() {
         id: docId,
       });
 
-      toast("Trip generated and saved successfully! 🎉");
+      toast("Trip generated and saved successfully!");
     } catch (dbError) {
       console.error("Firestore saving error:", dbError);
       toast("Trip generated, but failed to save to account.");
@@ -173,7 +173,7 @@ function CreateTrip() {
       .then((resp) => {
         localStorage.setItem("user", JSON.stringify(resp.data));
         setOpenDialog(false);
-       
+
         toast("Authenticated successfully! Click 'Generate Trip' again.");
       })
       .catch((err) => {
