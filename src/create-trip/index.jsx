@@ -3,7 +3,8 @@ import { Input } from "@/components/ui/input";
 import { SelectBudgetOptions, SelectTravelesList } from "@/constants/options";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import { AI_PROMPT, chatSession } from "@/service/AImodel";
+import { chatSession } from "@/service/AImodel";
+import { AI_PROMPT } from "@/constants/options";
 import {
   Dialog,
   DialogContent,
