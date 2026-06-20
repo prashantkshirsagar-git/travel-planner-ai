@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import React from "react";
-import { FaLocationDot } from "react-icons/fa6";
+import { FaMapLocationDot } from "react-icons/fa6";
 
 function PlaceCardItem({ place }) {
   return (
@@ -11,7 +11,7 @@ function PlaceCardItem({ place }) {
       <div>
         <h2 className="font-bold text-lg">{place.placeName}</h2>
         <p className="text-sm text-gray-400">{place.placeDetails}</p>
-        <Button><FaLocationDot color="red" /></Button>
+        <Button><FaMapLocationDot /></Button>
       </div>
     </div>
   );

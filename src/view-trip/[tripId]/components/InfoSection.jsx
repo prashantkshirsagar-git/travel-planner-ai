@@ -26,7 +26,7 @@ function InfoSection({ trip }) {
             </h2>
           </div>
         </div>
-        <Button className="cursor-pointer">
+        <Button >
           <IoMdShare />
         </Button>
       </div>
