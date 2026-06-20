@@ -1,19 +1,30 @@
-import { Button } from "@/components/ui/button";
 import React from "react";
-import { FaMapLocationDot } from "react-icons/fa6";
-
+import { Link } from "react-router-dom";
+import { FaStar } from "react-icons/fa";
 function PlaceCardItem({ place }) {
   return (
-    <div className="border round-xl p-3 m-2 flex gap-5">
-      <img src= "/placeholder.jpg"
-      alt="placename"
-      className="w-32.5 h-32.5 object-cover rounded-xl" />
-      <div>
-        <h2 className="font-bold text-lg">{place.placeName}</h2>
-        <p className="text-sm text-gray-400">{place.placeDetails}</p>
-        <Button><FaMapLocationDot /></Button>
-      </div>
+
+    <Link
+        to={
+          "https://www.google.com/maps/search/?api=1&query=" + place?.placeName
+        }
+        target="_blank"
+      >
+    <div className="border rounded-xl p-3 m-2 flex gap-5 hover:scale-105 transition-all hover:shadow-md cursor-pointer">
+      <img
+        src="/placeholder.jpg"
+        alt="placename"
+        className="w-32.5 h-32.5 object-cover rounded-xl"
+      />
+      
+        <div className="mt-5">
+          <h2 className="font-bold text-lg">{place.placeName}</h2>
+          <p className="text-sm text-gray-400">{place.placeDetails}</p>
+          <h2 className="text-sm text-green-500">{place.ticketPricing}</h2>
+        </div>
+      
     </div>
+    </Link>
   );
 }
 

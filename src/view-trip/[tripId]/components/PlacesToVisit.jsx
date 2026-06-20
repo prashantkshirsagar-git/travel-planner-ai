@@ -9,7 +9,7 @@ function PlacesToVisit({ trip }) {
         {trip?.tripData?.travelPlan?.itinerary?.map((item, index) => (
           <>
             <h3 className="font-bold text-lg mt-4">day {item.day}</h3>
-            <div className="gap-5 grid grid-cols-2">
+            <div className="gap-5 grid md:grid-cols-2">
               {item.plan?.map((place, index) => (
                 <div className="">
                   
