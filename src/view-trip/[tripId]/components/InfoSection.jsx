@@ -14,19 +14,21 @@ function InfoSection({ trip }) {
             {trip?.userSelection?.location}
           </h2>
 
-          <div className="flex gap-5">
-            <h2 className="p-1,px-3 bg-gray-300 rounded-full text-gray-500 text-xs md:text-lg">
+          <div className="flex gap-5 items-center">
+            <h2 className="py-1 px-3 bg-gray-200 text-gray-600 rounded-full text-xs md:text-sm font-medium w-fit">
               📅 {trip.userSelection?.noOfDays} Day
             </h2>
-            <h2 className="p-1,px-3 bg-gray-300 rounded-full text-gray-500 text-xs md:text-lg">
+            <h2 className="py-1 px-3 bg-gray-200 text-gray-600 rounded-full text-xs md:text-sm font-medium w-fit">
               💵 {trip.userSelection?.budget} Budget
             </h2>
-            <h2 className="p-1,px-3 bg-gray-300 rounded-full text-gray-500 text-xs md:text-lg">
+            <h2 className="py-1 px-3 bg-gray-200 text-gray-600 rounded-full text-xs md:text-sm font-medium w-fit">
               🥂 No. of traveler: {trip.userSelection?.traveler}
             </h2>
           </div>
         </div>
-        <Button className="cursor-pointer"><IoMdShare /></Button>
+        <Button className="cursor-pointer">
+          <IoMdShare />
+        </Button>
       </div>
     </div>
   );
