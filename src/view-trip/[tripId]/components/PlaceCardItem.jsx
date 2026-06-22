@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { FaStar } from "react-icons/fa";
+
 function PlaceCardItem({ place }) {
   return (
 

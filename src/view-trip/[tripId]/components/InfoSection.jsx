@@ -1,13 +1,38 @@
 import { Button } from "@/components/ui/button";
-import React from "react";
+import { GetPlacePhoto } from "@/service/GlobalApi";
+import React, { useEffect, useState } from "react";
 import { IoMdShare } from "react-icons/io";
+
 function InfoSection({ trip }) {
+  const [photoUrl, setPhotoUrl] = useState(null);
+
+  useEffect(() => {
+    trip && GetPlaceImage();
+  }, [trip]);
+
+  const GetPlaceImage = () => {
+    GetPlacePhoto(trip?.userSelection?.location)
+      .then((resp) => {
+        const photo = resp.data?.photos?.[0];
+        if (photo) {
+          setPhotoUrl(photo.src.large2x);
+        }
+      })
+      .catch((err) => {
+        console.log("Pexels error:", err.response?.data || err.message);
+      });
+  };
+
   return (
     <div>
-      <img
-        src="/placeholder.jpg"
-        className="h[340px] w-full object rounded-xl"
-      />
+      {photoUrl && (
+        <img
+          src={photoUrl}
+          alt={trip?.userSelection?.location}
+          className="block h-85 w-full max-w-full object-cover rounded-xl"
+        />
+      )}
+
       <div className="flex justify-between items-center">
         <div className="my-5 flex flex-col gap-2">
           <h2 className="font-bold text-2xl">
@@ -26,7 +51,7 @@ function InfoSection({ trip }) {
             </h2>
           </div>
         </div>
-        <Button >
+        <Button>
           <IoMdShare />
         </Button>
       </div>
