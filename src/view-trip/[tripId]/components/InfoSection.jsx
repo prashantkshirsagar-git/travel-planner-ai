@@ -7,15 +7,18 @@ function InfoSection({ trip }) {
   const [photoUrl, setPhotoUrl] = useState(null);
 
   useEffect(() => {
-    trip && GetPlaceImage();
+    if (trip?.userSelection?.location) {
+      GetPlaceImage();
+    }
   }, [trip]);
 
   const GetPlaceImage = () => {
     GetPlacePhoto(trip?.userSelection?.location)
       .then((resp) => {
-        const photo = resp.data?.photos?.[0];
-        if (photo) {
-          setPhotoUrl(photo.src.large2x);
+        const photos = resp.data?.photos;
+        if (photos && photos.length > 0) {
+          const randomIndex = Math.floor(Math.random() * photos.length);
+          setPhotoUrl(photos[randomIndex].src.large2x);
         }
       })
       .catch((err) => {
