@@ -1,7 +1,28 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-
+import { GetPlacePhoto } from "@/service/GlobalApi";
 function PlaceCardItem({ place }) {
+const [photoUrl, setPhotoUrl] = useState(null);
+
+  useEffect(() => {
+    if (place.placeName) {
+      GetPlaceImage();
+    }
+  }, [place]);
+
+  const GetPlaceImage = () => {
+    GetPlacePhoto(place.placeName)
+      .then((resp) => {
+        const photos = resp.data?.photos;
+        if (photos && photos.length > 0) {
+          const randomIndex = Math.floor(Math.random() * photos.length);
+          setPhotoUrl(photos[randomIndex].src.large2x);
+        }
+      })
+      .catch((err) => {
+        console.log("Pexels error:", err.response?.data || err.message);
+      });
+    }
   return (
 
     <Link
@@ -12,9 +33,9 @@ function PlaceCardItem({ place }) {
       >
     <div className="border rounded-xl p-3 m-2 flex gap-5 hover:scale-105 transition-all hover:shadow-md cursor-pointer">
       <img
-        src="/placeholder.jpg"
-        alt="placename"
-        className="w-32.5 h-32.5 object-cover rounded-xl"
+        src={photoUrl ? photoUrl : "/placeholder.jpg"}
+        alt={place.placeName}
+        className="w-35.5 h-35.5 object-cover rounded-xl"
       />
       
         <div className="mt-5">

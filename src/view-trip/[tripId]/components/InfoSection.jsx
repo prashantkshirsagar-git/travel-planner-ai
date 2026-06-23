@@ -32,7 +32,7 @@ function InfoSection({ trip }) {
         <img
           src={photoUrl}
           alt={trip?.userSelection?.location}
-          className="block h-85 w-full max-w-full object-cover rounded-xl"
+          className="block h-85 w-full max-w-full object-cover object-center rounded-xl"
         />
       )}
 
