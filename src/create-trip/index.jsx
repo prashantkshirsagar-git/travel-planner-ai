@@ -305,7 +305,7 @@ function CreateTrip() {
             <DialogDescription></DialogDescription>
           </DialogHeader>
 
-          <img src="logo.svg" alt="logo" />
+          <img src="/logo.svg" alt="logo" />
           <p>Sign In with Google Authentication</p>
 
           <Button onClick={login} className="w-full mt-5 gap-4 items-center">
