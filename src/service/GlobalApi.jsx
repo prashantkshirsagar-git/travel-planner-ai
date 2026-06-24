@@ -9,4 +9,4 @@ const pexelsConfig = {
 };
 
 export const GetPlacePhoto = (query) =>
-  axios.get(`${PEXELS_BASE_URL}?query=${encodeURIComponent(query)}&per_page=15&orientation=landscape`, pexelsConfig);
+  axios.get(`${PEXELS_BASE_URL}?query=${encodeURIComponent(query)}&per_page=10&orientation=landscape`, pexelsConfig);
