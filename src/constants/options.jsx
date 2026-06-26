@@ -1,31 +1,41 @@
+import {
+  Plane,
+  Heart,
+  House,
+  Users,
+  Wallet,
+  PiggyBank,
+  Gem,
+} from "lucide-react";
+
 export const SelectTravelesList = [
   {
     id: 1,
     title: "Just Me",
-    desc: "A sole traveles in exploration",
-    icon: "✈️",
-    people: "1",
+    desc: "A solo traveler exploring the world",
+    icon: Plane,
+    people: "1 Person",
   },
   {
     id: 2,
     title: "A Couple",
-    desc: "Two traveles in tandem",
-    icon: "🥂",
+    desc: "Two travelers in tandem",
+    icon: Heart,
     people: "2 People",
   },
   {
     id: 3,
     title: "Family",
-    desc: "A group of fun loving advanture",
-    icon: "🏡",
-    people: "3 to 5 People",
+    desc: "A fun-loving family adventure",
+    icon: House,
+    people: "3–5 People",
   },
   {
     id: 4,
     title: "Friends",
-    desc: "A bunch of thrill-seekes",
-    icon: "⛵",
-    people: "4 to 6 People",
+    desc: "A group of thrill-seekers",
+    icon: Users,
+    people: "4–6 People",
   },
 ];
 
@@ -34,19 +44,19 @@ export const SelectBudgetOptions = [
     id: 1,
     title: "Cheap",
     desc: "Stay conscious of costs",
-    icon: "💵",
+    icon: Wallet,
   },
   {
     id: 2,
     title: "Moderate",
-    desc: "Keep cost on the average side",
-    icon: "💰",
+    desc: "Keep costs on the average side",
+    icon: PiggyBank,
   },
   {
     id: 3,
     title: "Luxury",
     desc: "Experience the finest options without limits",
-    icon: "💎",
+    icon: Gem,
   },
 ];
 
