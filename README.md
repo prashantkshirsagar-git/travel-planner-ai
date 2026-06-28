@@ -1,4 +1,4 @@
-````md
+
 # AI Trip Planner
 
 An AI-powered travel planner that generates personalized trip itineraries based on destination, travel duration, budget, and travel companions, with Google authentication and Firebase trip storage.
@@ -144,4 +144,3 @@ A sample configuration is already provided in `.example.env`.
 ## License
 
 This project is open source and available under the MIT License.
-````
