@@ -52,7 +52,7 @@ function InfoSection({ trip }) {
   };
 
   return (
-    <div className="font-mono">
+    <div className=" ">
       {photoUrl && (
         <img
           src={photoUrl}

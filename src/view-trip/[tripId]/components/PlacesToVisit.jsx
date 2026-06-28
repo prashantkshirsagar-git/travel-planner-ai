@@ -3,7 +3,7 @@ import PlaceCardItem from "./PlaceCardItem";
 
 function PlacesToVisit({ trip }) {
   return (
-    <div className="font-mono mt-5">
+    <div className="  mt-5">
       <h2 className="font-bold text-xl text-black mb-4">Places to Visit</h2>
       <div>
         {trip?.tripData?.travelPlan?.itinerary?.map((item, dayIndex) => (

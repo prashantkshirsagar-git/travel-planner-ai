@@ -177,10 +177,10 @@ function CreateTrip() {
   };
 
   return (
-    <div className="font-mono bg-[#F4F1EA] min-h-screen">
+    <div className="  bg-[#F4F1EA] min-h-screen">
       <div className="sm:px-10 md:px-32 lg:px-56 xl:px-72 px-5 pt-10 pb-20">
         <h2 className="font-bold text-3xl text-black">
-          Tell us your travel preferences 
+          Tell us your travel preferences
         </h2>
         <p className="mt-3 text-black/60 text-lg leading-relaxed">
           Just provide some basic information, and our trip planner will
@@ -244,7 +244,10 @@ function CreateTrip() {
                       : "border-black/20"
                   }`}
                 >
-                  <h2 className="text-3xl"> <item.icon className="h-6 w-6 text-black" /></h2>
+                  <h2 className="text-3xl">
+                    {" "}
+                    <item.icon className="h-6 w-6 text-black" />
+                  </h2>
                   <h2 className="font-bold text-base text-black mt-1">
                     {item.title}
                   </h2>
@@ -269,7 +272,10 @@ function CreateTrip() {
                       : "border-black/20"
                   }`}
                 >
-                  <h2 className="text-3xl"> <item.icon className="h-6 w-6 text-black" /></h2>
+                  <h2 className="text-3xl">
+                    {" "}
+                    <item.icon className="h-6 w-6 text-black" />
+                  </h2>
                   <h2 className="font-bold text-base text-black mt-1">
                     {item.title}
                   </h2>
@@ -297,7 +303,7 @@ function CreateTrip() {
 
       {openDialog && (
         <div
-          className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 font-mono"
+          className="fixed inset-0 bg-black/40 flex items-center justify-center z-50  "
           onClick={() => setOpenDialog(false)}
         >
           <div

@@ -11,6 +11,10 @@
   },
   "dependencies": {
     "@fontsource-variable/geist": "^5.2.9",
+    "@fontsource-variable/ibm-plex-sans": "^5.2.8",
+    "@fontsource-variable/manrope": "^5.2.8",
+    "@fontsource-variable/outfit": "^5.2.8",
+    "@fontsource-variable/plus-jakarta-sans": "^5.2.8",
     "@google/genai": "^2.8.0",
     "@react-oauth/google": "^0.13.5",
     "@tailwindcss/vite": "^4.3.0",

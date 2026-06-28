@@ -4,8 +4,8 @@ import { ArrowRight } from "lucide-react";
 
 function Hero() {
   return (
-    <div className="bg-[#F4F1EA] font-mono">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto px-6 pt-14 pb-18 lg:pt-14 lg:pb-23">
+    <div className="bg-[#F4F1EA] min-h-screen flex items-start">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto px-6 py-16 w-full">
         <div className="flex flex-col items-start gap-6">
           <span className="inline-flex items-center rounded-sm border border-black/80 px-4 py-1 text-xs tracking-wide text-black/80">
             AI TRIP PLANNER
@@ -29,10 +29,7 @@ function Hero() {
                 <ArrowRight size={16} />
               </button>
             </Link>
-            
           </div>
-
-          
         </div>
 
         <div className="relative">
@@ -70,9 +67,24 @@ function Hero() {
 
             <div className="grid grid-cols-3 gap-2 mb-2">
               {[
-                { name: "Generator Paris", loc: "10th Arr., Paris", price: "€45", rating: "4.1" },
-                { name: "St Christopher's", loc: "Canal, Paris", price: "€39", rating: "4.3" },
-                { name: "Le Regent Hostel", loc: "Montmartre, Paris", price: "€42", rating: "4.0" },
+                {
+                  name: "Generator Paris",
+                  loc: "10th Arr., Paris",
+                  price: "€45",
+                  rating: "4.1",
+                },
+                {
+                  name: "St Christopher's",
+                  loc: "Canal, Paris",
+                  price: "€39",
+                  rating: "4.3",
+                },
+                {
+                  name: "Le Regent Hostel",
+                  loc: "Montmartre, Paris",
+                  price: "€42",
+                  rating: "4.0",
+                },
               ].map((stay) => (
                 <div
                   key={stay.name}

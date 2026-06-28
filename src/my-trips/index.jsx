@@ -100,7 +100,7 @@ function MyTrips() {
   };
 
   return (
-    <div className="font-mono bg-[#F4F1EA] min-h-screen">
+    <div className="  bg-[#F4F1EA] min-h-screen">
       <div className="sm:px-10 md:px-32 lg:px-56 xl:px-72 px-5 pt-10 pb-20">
         <div className="flex items-center justify-between">
           <h2 className="font-bold text-3xl text-black">My Trips</h2>
@@ -126,9 +126,7 @@ function MyTrips() {
         </div>
 
         {selectMode && (
-          <p className="text-xs text-black/50 mt-2">
-            Select trips to delete
-          </p>
+          <p className="text-xs text-black/50 mt-2">Select trips to delete</p>
         )}
 
         <div className="grid sm:grid-cols-2 mt-10 md:grid-cols-3 gap-5">
@@ -144,13 +142,13 @@ function MyTrips() {
                 />
               ))
             : loading
-            ? [1, 2, 3, 4, 5, 6].map((item, index) => (
-                <div
-                  key={index}
-                  className="h-56 w-full border border-black/20 bg-black/5 animate-pulse rounded-xl"
-                ></div>
-              ))
-            : null}
+              ? [1, 2, 3, 4, 5, 6].map((item, index) => (
+                  <div
+                    key={index}
+                    className="h-56 w-full border border-black/20 bg-black/5 animate-pulse rounded-xl"
+                  ></div>
+                ))
+              : null}
         </div>
 
         {!loading && userTrips?.length === 0 && (
@@ -162,7 +160,7 @@ function MyTrips() {
 
       {confirmingBulkDelete && (
         <div
-          className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 font-mono"
+          className="fixed inset-0 bg-black/40 flex items-center justify-center z-50  "
           onClick={() => setConfirmingBulkDelete(false)}
         >
           <div

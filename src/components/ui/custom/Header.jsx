@@ -5,9 +5,7 @@ import axios from "axios";
 import { toast } from "sonner";
 
 function Header() {
-  const [user, setUser] = useState(
-    JSON.parse(localStorage.getItem("user"))
-  );
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
   const [openDialog, setOpenDialog] = useState(false);
   const [openMenu, setOpenMenu] = useState(false);
   const menuRef = useRef(null);
@@ -44,7 +42,7 @@ function Header() {
             Authorization: `Bearer ${tokenInfo.access_token}`,
             Accept: "application/json",
           },
-        }
+        },
       )
       .then((resp) => {
         localStorage.setItem("user", JSON.stringify(resp.data));
@@ -67,13 +65,10 @@ function Header() {
   };
 
   return (
-    <div className="font-mono bg-[#F4F1EA] border-b border-gray-400">
+    <div className="  bg-[#F4F1EA] border-b border-gray-400">
       <div className="flex items-center justify-between px-6 py-4  max-w-6xl mx-auto">
         <a href="/" className="flex items-center gap-2">
-          
-          <span className="font-bold text-black text-base">
-            PlanTrip
-          </span>
+          <span className="font-bold text-black text-base">PlanTrip</span>
         </a>
 
         <div className="flex items-center gap-6">
@@ -130,7 +125,7 @@ function Header() {
 
       {openDialog && (
         <div
-          className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 font-mono"
+          className="fixed inset-0 bg-black/40 flex items-center justify-center z-50  "
           onClick={() => setOpenDialog(false)}
         >
           <div
@@ -150,8 +145,6 @@ function Header() {
                 ✕
               </button>
             </div>
-
-           
 
             <p className="text-sm text-black/60 mb-5">
               Sign in with Google Authentication

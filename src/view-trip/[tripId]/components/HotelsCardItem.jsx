@@ -36,7 +36,7 @@ function HotelsCardItem({ hotel }) {
       target="_blank"
       rel="noopener noreferrer"
     >
-      <div className="font-mono border border-black/20 rounded-xl overflow-hidden hover:scale-[1.02] hover:shadow-sm transition-all cursor-pointer">
+      <div className="  border border-black/20 rounded-xl overflow-hidden hover:scale-[1.02] hover:shadow-sm transition-all cursor-pointer">
         <img
           src={photoUrl ? photoUrl : "/placeholder.jpg"}
           alt={hotel?.hotelName}

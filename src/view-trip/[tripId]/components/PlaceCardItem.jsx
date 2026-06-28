@@ -27,13 +27,11 @@ function PlaceCardItem({ place }) {
 
   return (
     <Link
-      to={
-        "https://www.google.com/maps/search/?api=1&query=" + place?.placeName
-      }
+      to={"https://www.google.com/maps/search/?api=1&query=" + place?.placeName}
       target="_blank"
       rel="noopener noreferrer"
     >
-      <div className="font-mono border border-black/20 rounded-xl p-3 m-2 flex gap-4 hover:scale-[1.02] hover:shadow-sm transition-all cursor-pointer">
+      <div className="  border border-black/20 rounded-xl p-3 m-2 flex gap-4 hover:scale-[1.02] hover:shadow-sm transition-all cursor-pointer">
         <img
           src={photoUrl ? photoUrl : "/placeholder.jpg"}
           alt={place?.placeName}
@@ -41,13 +39,9 @@ function PlaceCardItem({ place }) {
         />
 
         <div className="py-1">
-          <h2 className="font-bold text-base text-black">
-            {place?.placeName}
-          </h2>
+          <h2 className="font-bold text-base text-black">{place?.placeName}</h2>
           <p className="text-sm text-black/50 mt-1">{place?.placeDetails}</p>
-          <h2 className="text-sm text-black/70 mt-1">
-            {place?.ticketPricing}
-          </h2>
+          <h2 className="text-sm text-black/70 mt-1">{place?.ticketPricing}</h2>
         </div>
       </div>
     </Link>

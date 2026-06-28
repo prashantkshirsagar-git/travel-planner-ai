@@ -74,8 +74,7 @@ function UserTripCardItem({
           text: `Check out my trip to ${trip?.userSelection?.location}!`,
           url: tripUrl,
         });
-      } catch {
-      }
+      } catch {}
       return;
     }
 
@@ -107,7 +106,7 @@ function UserTripCardItem({
   return (
     <div
       onClick={handleCardClick}
-      className={`font-mono border rounded-xl overflow-hidden transition-all relative cursor-pointer ${
+      className={`  border rounded-xl overflow-hidden transition-all relative cursor-pointer ${
         selectMode
           ? selected
             ? "border-black ring-2 ring-black"
@@ -153,9 +152,7 @@ function UserTripCardItem({
           className="absolute inset-0 z-20 bg-[#F4F1EA]/95 flex flex-col items-center justify-center gap-3 p-4 text-center"
           onClick={(e) => e.stopPropagation()}
         >
-          <p className="text-sm text-black font-semibold">
-            Delete this trip?
-          </p>
+          <p className="text-sm text-black font-semibold">Delete this trip?</p>
           <p className="text-xs text-black/50">This can&apos;t be undone.</p>
           <div className="flex gap-2 mt-1">
             <button

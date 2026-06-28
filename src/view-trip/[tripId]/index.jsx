@@ -33,7 +33,7 @@ function Viewtrip() {
   };
 
   return (
-    <div className="font-mono bg-[#F4F1EA] min-h-screen">
+    <div className="  bg-[#F4F1EA] min-h-screen">
       <div className="p-10 md:px-20 lg:px-44 xl:px-56">
         {loading ? (
           <div className="flex flex-col gap-6">
