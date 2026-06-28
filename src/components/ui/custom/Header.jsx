@@ -95,7 +95,7 @@ function Header() {
                 >
                   <img
                     src={user.picture}
-                    className="h-9 w-9 rounded-lg border border-black/60"
+                    className="h-9 w-9 rounded-md border border-black/60"
                     alt={user.name || "Profile"}
                   />
                 </button>
