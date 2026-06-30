@@ -10,13 +10,13 @@ https://travel-planner-ai-five-xi.vercel.app/
 ## Features
 
 - Generate personalized trips using Gemini AI
-- Search destinations with Google Places Autocomplete
+- Search destinations with OpenStreeMap Autocomplete
 - View recommended hotels for your trip
 - Get a complete day-wise travel itinerary
 - Sign in with your Google account
 - Save trips to Firebase Firestore
 - View your previously created trips
-- Display destination images using the Google Places API
+- Display destination images using the Pexels API
 - Responsive interface built with Tailwind CSS
 
 ## Tech Stack
@@ -34,7 +34,6 @@ https://travel-planner-ai-five-xi.vercel.app/
 - Gemini AI
 - Firebase Authentication
 - Cloud Firestore
-- Google Places API
 - Pexels API
 
 ## Project Structure
@@ -84,8 +83,6 @@ Example:
 ```env
 VITE_GEMINI_API_KEY=your_gemini_api_key
 
-VITE_GOOGLE_PLACE_API_KEY=your_google_places_api_key
-
 VITE_GOOGLE_AUTH_CLIENT_ID=your_google_oauth_client_id
 
 VITE_FIREBASE_API_KEY=your_firebase_api_key
@@ -134,7 +131,6 @@ The project uses the following environment variables.
 | Variable                     | Description            |
 | ---------------------------- | ---------------------- |
 | `VITE_GEMINI_API_KEY`        | Gemini AI API key      |
-| `VITE_GOOGLE_PLACE_API_KEY`  | Google Places API key  |
 | `VITE_GOOGLE_AUTH_CLIENT_ID` | Google OAuth Client ID |
 | `VITE_FIREBASE_API_KEY`      | Firebase API key       |
 | `VITE_PEXELS_API_KEY`        | Pexels API key         |
